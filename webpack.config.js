@@ -3,7 +3,10 @@ const path = require('path')
 const webpack = require('webpack')
 
 const projectDir = path.resolve(__dirname)
-const mainAppEntryPoint = path.join(projectDir, 'appMain.lsc')
+const jsFolder = path.join(projectDir, 'src', 'js')
+const jsSrcFolder = path.join(jsFolder, 'src')
+const jsBuildFolder = path.join(jsFolder, 'build')
+const mainEntryPoint = path.join(jsSrcFolder, 'main.lsc')
 const ISDEV = process.env.NODE_ENV !== 'production'
 
 console.log('ISDEV: ', ISDEV)
@@ -11,11 +14,11 @@ console.log('process.env.NODE_ENV: ', process.env.NODE_ENV)
 
 const webpackOptions = {
   mode: process.env.NODE_ENV,
-  target: 'node',
-  entry: mainAppEntryPoint,
+  target: 'web',
+  entry: mainEntryPoint,
   output: {
-    filename: 'appMain-compiled.js',
-    path: projectDir
+    filename: 'main-compiled.js',
+    path: jsBuildFolder
   },
   devtool: ISDEV ? 'source-map' : 'none',
   context: projectDir,
