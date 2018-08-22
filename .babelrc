@@ -1,0 +1,17 @@
+{
+  "presets": [
+    [
+      "@oigroup/babel-preset-lightscript",
+      {
+        "env": {
+          "targets": {
+            "node":"8.11.4"
+          }
+        },
+        "stdlib": false,
+        "noEnforcedSubscriptIndentation": true,
+        "existential": true
+      }
+    ]
+  ]
+}

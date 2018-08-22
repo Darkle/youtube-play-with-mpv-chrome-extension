@@ -1,0 +1,94 @@
+{
+  "parser": "@oigroup/lightscript-eslint",
+  "extends": [
+    "eslint:recommended"
+  ],
+  "globals": {
+    "ISDEV": true
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "impliedStrict": true,
+      "modules": true
+    }
+  },
+  "rules": {
+    "handle-callback-err": "error",
+    "key-spacing": [
+      "error",
+      {
+        "beforeColon": false,
+        "afterColon": true
+      }
+    ],
+    "no-await-in-loop": "error",
+    "no-buffer-constructor": "error",
+    "no-caller": "error",
+    "no-class-assign": "error",
+    "no-console": 0,
+    "no-const-assign": "error",
+    "no-debugger": "error",
+    "no-dupe-class-members": "error",
+    "no-duplicate-imports": "error",
+    "no-empty-function": "error",
+    "no-eval": "error",
+    "no-extend-native": "error",
+    "no-implied-eval": "error",
+    "no-invalid-this": "error",
+    "no-loop-func": "error",
+    "no-mixed-spaces-and-tabs": "error",
+    "no-multi-spaces": [
+      "error",
+      {
+        "ignoreEOLComments": true
+      }
+    ],
+    "no-native-reassign": [
+      "error",
+      {
+        "exceptions": [
+          "Promise"
+        ]
+      }
+    ],
+    "no-new": "error",
+    "no-new-func": "error",
+    "no-new-require": "error",
+    "no-new-symbol": "error",
+    "no-new-wrappers": "error",
+    "no-param-reassign": "error",
+    "no-path-concat": "error",
+    "no-plusplus": [
+      "error",
+      {
+        "allowForLoopAfterthoughts": true
+      }
+    ],
+    "no-process-exit": "off",
+    "no-shadow": "error",
+    "no-spaced-func": "error",
+    "no-throw-literal": "error",
+    "no-undefined": "error",
+    "no-useless-call": "error",
+    "prefer-promise-reject-errors": "error",
+    "prefer-spread": "error",
+    "prefer-template": "error",
+    "require-yield": "error",
+    "semi": [
+      "error",
+      "never"
+    ],
+    "space-before-function-paren": 0,
+    "template-curly-spacing": [
+      "error",
+      "always"
+    ]
+  }
+}

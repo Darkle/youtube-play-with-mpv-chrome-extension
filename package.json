@@ -1,0 +1,31 @@
+{
+  "name": "yt-play-with-mpv",
+  "version": "1.0.0",
+  "description": "",
+  "main": "webpack.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Darkle/yt-play-with-mpv.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Darkle/yt-play-with-mpv/issues"
+  },
+  "homepage": "https://github.com/Darkle/yt-play-with-mpv#readme",
+  "devDependencies": {
+    "@oigroup/babel-preset-lightscript": "^3.1.1",
+    "@oigroup/lightscript-eslint": "^3.1.1",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "cross-env": "^5.2.0",
+    "eslint": "^5.4.0",
+    "webpack": "^4.17.0",
+    "webpack-cli": "^3.1.0",
+    "webpack-node-externals": "^1.7.2"
+  }
+}
