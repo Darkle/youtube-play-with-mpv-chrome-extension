@@ -1,0 +1,55 @@
+{
+  "name": "Youtube Play With MPV",
+  "version": "0.0.1",
+  "description": "Allows you to play youtube videos in mpv",
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+  "content_security_policy": "default-src 'self'",
+  "options_page": "options.html",
+  "background": {
+    "scripts": [
+      "background.js"
+    ],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.youtube.com/*"
+      ],
+      "exclude_matches": [
+        "https://www.youtube.com/embed/*"
+      ],
+      "css": [
+        "youtube.css"
+      ],
+      "js": [
+        "youtube-content-script.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://www.youtube.com/embed/*"
+      ],
+      "exclude_matches": [
+        "https://www.youtube.com/*"
+      ],
+      "all_frames": true,
+      "js": [
+        "youtube-embeds-content-script.js"
+      ]
+    }
+  ],
+  "page_action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "128": "mpv-logo-128.png"
+    }
+  },
+  "icons": {
+    "128": "mpv-logo-128.png"
+  },
+  "manifest_version": 2
+}

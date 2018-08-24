@@ -4,7 +4,8 @@
     "eslint:recommended"
   ],
   "globals": {
-    "ISDEV": true
+    "ISDEV": true,
+    "chrome": true
   },
   "env": {
     "browser": true,

@@ -4,7 +4,9 @@
   "description": "",
   "main": "webpack.config.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "ww": "cross-env NODE_ENV=development webpack --watch --max-retries=1 --no-stats",
+    "debug": "cross-env NODE_ENV=development webpack && node --inspect appMain-compiled.js",
+    "build": "cross-env NODE_ENV=production webpack && node devTasks/packageApp.js"
   },
   "repository": {
     "type": "git",
@@ -20,10 +22,13 @@
   "devDependencies": {
     "@oigroup/babel-preset-lightscript": "^3.1.1",
     "@oigroup/lightscript-eslint": "^3.1.1",
+    "@oigroup/lightscript-runtime": "^0.1.1",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
+    "clean-webpack-plugin": "^0.1.19",
+    "copy-webpack-plugin": "^4.5.2",
     "cross-env": "^5.2.0",
-    "eslint": "^5.4.0",
+    "eslint": "=4.8.0",
     "webpack": "^4.17.0",
     "webpack-cli": "^3.1.0",
     "webpack-node-externals": "^1.7.2"

@@ -1,0 +1,6 @@
+
+console.log('all-sites')
+
+youtubeEmbeds = [...document.querySelectorAll('iframe[src^="https://www.youtube.com/embed/"]')]
+
+// chrome.runtime.sendMessage({greeting: "hello"})
