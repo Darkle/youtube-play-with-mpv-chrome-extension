@@ -17,7 +17,7 @@ const backgroundEntryPoint = path.join(srcFolder, 'background', 'backgroundMain.
 const ytContentScriptEntryPoint = path.join(srcFolder, 'content-scripts', 'youtube', 'youtube.lsc')
 // const ytContentScriptCSS = path.join(srcFolder, 'content-scripts', 'youtube', 'styles', 'youtube.css')
 const ytEmbedsContentScript = path.join(srcFolder, 'content-scripts', 'youtube', 'youtube-embeds.lsc')
-// const allSitesScriptEntryPoint = path.join(srcFolder, 'content-scripts', 'all-sites', 'all-sites.lsc')
+const allSitesScriptEntryPoint = path.join(srcFolder, 'content-scripts', 'all-sites.lsc')
 const ISDEV = process.env.NODE_ENV !== 'production'
 
 console.log('ISDEV: ', ISDEV)
@@ -30,7 +30,7 @@ const webpackOptions = {
     background: backgroundEntryPoint,
     'youtube-content-script': ytContentScriptEntryPoint,
     'youtube-embeds-content-script': ytEmbedsContentScript,
-    // 'all-sites-content-script': allSitesScriptEntryPoint,
+    'all-sites-content-script': allSitesScriptEntryPoint,
     options: optionsJSFile,
     popup: popupJSFile
   },

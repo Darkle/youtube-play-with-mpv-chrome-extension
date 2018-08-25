@@ -4,6 +4,10 @@ Medium purple: #754A72
 Light purple: #FFE6FF
 Aqua-ish: #00C9C6
 */
+body{
+  margin:0;
+  padding:0;
+}
 #videoLinks {
   display:flex;
   flex-direction: column;
@@ -95,4 +99,3 @@ Aqua-ish: #00C9C6
   padding-top: 6px;
   padding-bottom: 20px;
 }
-\

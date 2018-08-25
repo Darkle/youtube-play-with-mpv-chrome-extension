@@ -36,6 +36,9 @@
     "webpack-node-externals": "^1.7.2"
   },
   "dependencies": {
-    "brutalist-web": "^1.5.15"
+    "axios": "^0.18.0",
+    "get-youtube-id": "^1.0.0",
+    "nanohtml": "^1.2.4",
+    "p-map": "^1.2.0"
   }
 }

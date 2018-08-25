@@ -1,0 +1,16 @@
+import getYoutubeId from 'get-youtube-id'
+
+console.log('all-sites-content-script')
+selector = 'a[href^="https://youtu.be/"], a[href^="https://www.youtube.com/"]'
+
+youtubeLinks = [...document.querySelectorAll(selector)].reduce((links, link) ->
+  videoHref = link.href
+  videoId = getYoutubeId(videoHref)
+  // remove duplicates and ignore if empty video id
+  if links.find(l -> l.href === videoHref): return links
+  if !videoId?.length > 0: return links
+
+  [...links, {href: videoHref, videoId: videoId}]
+)
+
+chrome.runtime.sendMessage({youtubeLinks, allSites: true})
