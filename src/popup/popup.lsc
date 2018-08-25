@@ -2,9 +2,11 @@ import './styles/popup.css'
 
 import html from 'nanohtml'
 import axios from 'axios'
+import pMap from 'p-map'
 
+type embedVideo = {videoTitle: ?string, videoId:string};
 videoLinksContainer = document.querySelector('#videoLinks')
-video = {videoHref:string, videoTitle:string, videoId:string}
+googleApiUrl = 'https://www.googleapis.com/youtube/v3/videos'
 
 chrome.tabs.query({active: true, currentWindow: true}, tabs ->
   activeTabUrl = tabs[0].url
@@ -18,7 +20,7 @@ chrome.tabs.query({active: true, currentWindow: true}, tabs ->
 )
 
 injectContentScripts(tabId:number):void ->
-  chrome.tabs.executeScript({file: 'all-sites-content-script'})
+  chrome.tabs.executeScript({file: 'all-sites-content-script.js'})
   chrome.webNavigation.getAllFrames({tabId}, frames ->
     for elem {frameId, url} in frames:
       if url.startsWith('https://www.youtube.com/embed/'):
@@ -32,19 +34,22 @@ injectContentScripts(tabId:number):void ->
 chrome.runtime.onMessage.addListener(messageData ->
   if !messageData.allSites:
     return addLinkToPage(messageData)
-  getVideoTitles(messageData)
-    .then(addLinkToPage).catch(e -> console.error(e))
+  pMap(getVideoTitles(messageData.youtubeLinksVideoIds), addLinkToPage)
+    .catch(e -> console.error(e))
 )
 
-addLinkToPage({videoHref, videoTitle, videoId}:video):void ->
+addLinkToPage({videoTitle, videoId}:embedVideo):void ->
   // don't add duplicates.
-  if document.querySelector(`#${ videoId }`): return
+  if document.querySelector(`#mpv-${ videoId }`): return
 
   videoLinksContainer.appendChild(
     html`
-      <a id="${ videoId }" class="linkCard" href="${ videoHref }" onclick=${ linkClickHandler }>
+      <a id="${ videoId }" class="linkCard"
+          href="https://www.youtube.com/watch?v=${ videoId }"
+          onclick=${ linkClickHandler }>
         <img class="mpvIcon" src="mpv-logo-128.png">
-        <img src="https://i.ytimg.com/vi_webp/${ videoId }/hqdefault.webp" class="videoImage">
+        <img src="https://i.ytimg.com/vi/${ videoId }/hqdefault.jpg"
+            class="videoImage">
         <h5>${ videoTitle }</h5>
       </a>
     `
@@ -54,9 +59,13 @@ linkClickHandler(event) ->
   event.preventDefault()
   console.log(event.currentTarget.getAttribute('href'))
 
-getVideoTitles({videoHref, videoTitle, videoId}:video):Promise ->
-  axios.get('/user?ID=12345').then(response ->
+getVideoTitles(videoIds:Array<string>):Promise ->
+  axios.get(googleApiUrl, {
+    params: {
+      id: videoIds.join(),
+      part: 'snippet'
+    }
+  }).then(response ->
     console.log(response)
   )
-
 

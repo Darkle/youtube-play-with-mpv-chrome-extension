@@ -4,8 +4,7 @@ console.log('youtube embeds')
 
 videoTitleLink = document.querySelector('.ytp-title-link')
 videoTitle = videoTitleLink?.textContent
-videoHref = videoTitleLink?.href
-videoId = getYoutubeId(videoHref)
+videoId = getYoutubeId(videoTitleLink?.href)
 
-chrome.runtime.sendMessage({videoTitle, videoHref, videoId})
+chrome.runtime.sendMessage({videoTitle, videoId})
 

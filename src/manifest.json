@@ -10,7 +10,7 @@
     "webNavigation",
     "https://www.youtube.com/embed/*"
   ],
-  "content_security_policy": "default-src 'self'; style-src 'unsafe-inline';img-src * ;",
+  "content_security_policy": "default-src 'self'; style-src 'unsafe-inline';img-src * ; font-src 'self' data:;",
   "options_page": "options.html",
   "background": {
     "scripts": [
