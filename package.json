@@ -28,9 +28,14 @@
     "clean-webpack-plugin": "^0.1.19",
     "copy-webpack-plugin": "^4.5.2",
     "cross-env": "^5.2.0",
+    "css-loader": "^1.0.0",
     "eslint": "=4.8.0",
+    "style-loader": "^0.22.1",
     "webpack": "^4.17.0",
     "webpack-cli": "^3.1.0",
     "webpack-node-externals": "^1.7.2"
+  },
+  "dependencies": {
+    "brutalist-web": "^1.5.15"
   }
 }

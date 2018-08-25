@@ -80,7 +80,6 @@
     "no-useless-call": "error",
     "prefer-promise-reject-errors": "error",
     "prefer-spread": "error",
-    "prefer-template": "error",
     "require-yield": "error",
     "semi": [
       "error",

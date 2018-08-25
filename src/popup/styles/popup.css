@@ -1,0 +1,98 @@
+/*
+MPV dark purple: #520053
+Medium purple: #754A72
+Light purple: #FFE6FF
+Aqua-ish: #00C9C6
+*/
+#videoLinks {
+  display:flex;
+  flex-direction: column;
+  width: 408px;
+  height: 600px;
+  border-width: 0px 0px 0px 0px;
+  border-color: #520053;
+  border-radius: 0;
+  border-style: solid;
+  box-shadow: 1px 3px 3px 0px rgba(117, 74, 114, 0.4);
+  overflow-y:scroll;
+}
+.linkCard {
+  display:flex;
+  flex-shrink:0;
+  flex-direction:column;
+  margin-top:20px;
+  margin-left:10px;
+  margin-right:10px;
+  text-decoration:none;
+  border-width: 0px 0px 0px 0px;
+  border-color: #520053;
+  border-radius: 0;
+  border-style: solid;
+  box-shadow: 1px 3px 3px 0px rgba(117, 74, 114, 1);
+}
+.linkCard:first-child {
+  margin-top:10px;
+}
+.linkCard:last-child {
+  margin-bottom:20px;
+}
+/* hover styles */
+.linkCard:hover {
+  border-style: solid;
+/* box-shadow: 0px 6px 12px 3px rgba(82, 0, 83, 0.6); */
+  box-shadow: 0px 6px 12px 3px rgba(117, 74, 114, 0.6);
+}
+.linkCard .videoImage{
+  clip-path: inset(46px 1px 47px 1px);
+  margin-top: -46px;
+  margin-bottom: -47px;
+  margin-left:0;
+  margin-right:0;
+  display: block;
+  width: 372px;
+  height: 252px;
+}
+.linkCard .mpvIcon{
+  position: relative;
+  z-index: 10;
+  margin-bottom: -60px;
+  width: 60px;
+  opacity: 0.7;
+  top: 50px;
+  left: 150px;
+}
+.linkCard:hover .mpvIcon{
+  opacity: 0.8;
+}
+.linkCard h5{
+  /* font-family: 'Lato', sans-serif; */
+  /* font-family: 'Roboto', sans-serif; */
+  /*   font-family: 'Kosugi', sans-serif; */
+  font-family: 'Open Sans', sans-serif;
+  color:#443C88;
+/*   color: #827280; */
+/*   color: #561500; */
+  color: #50424F;
+  font-size:1em;
+  word-break: break-word;
+  margin:0;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-top:20px;
+  padding-bottom:20px;
+  height: 100%;
+  align-items: center;
+  display: flex;
+}
+.linkCard span{
+  color:#754A72;
+  opacity: 0.8;
+  font-size: 0.8em;
+  word-spacing:0.1em;
+  margin:0;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 6px;
+  padding-bottom: 20px;
+}
+\

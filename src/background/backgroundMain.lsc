@@ -2,3 +2,9 @@
 import '../dev/dev-hot-reload.lsc'
 
 
+chrome.declarativeContent.onPageChanged.removeRules(undefined, () ->  // eslint-disable-line no-undefined
+  chrome.declarativeContent.onPageChanged.addRules([{
+    conditions: [new chrome.declarativeContent.PageStateMatcher()],
+    actions: [new chrome.declarativeContent.ShowPageAction()]
+  }])
+)

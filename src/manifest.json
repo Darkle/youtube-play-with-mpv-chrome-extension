@@ -4,9 +4,13 @@
   "description": "Allows you to play youtube videos in mpv",
   "permissions": [
     "storage",
-    "activeTab"
+    "activeTab",
+    "tabs",
+    "declarativeContent",
+    "webNavigation",
+    "https://www.youtube.com/embed/*"
   ],
-  "content_security_policy": "default-src 'self'",
+  "content_security_policy": "default-src 'self'; style-src 'unsafe-inline';",
   "options_page": "options.html",
   "background": {
     "scripts": [
@@ -22,23 +26,8 @@
       "exclude_matches": [
         "https://www.youtube.com/embed/*"
       ],
-      "css": [
-        "youtube.css"
-      ],
       "js": [
         "youtube-content-script.js"
-      ]
-    },
-    {
-      "matches": [
-        "https://www.youtube.com/embed/*"
-      ],
-      "exclude_matches": [
-        "https://www.youtube.com/*"
-      ],
-      "all_frames": true,
-      "js": [
-        "youtube-embeds-content-script.js"
       ]
     }
   ],
