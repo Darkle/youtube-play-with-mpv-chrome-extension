@@ -8,6 +8,7 @@
     "tabs",
     "declarativeContent",
     "webNavigation",
+    "contextMenus",
     "https://www.youtube.com/embed/*",
     "https://www.googleapis.com/youtube/v3/*"
   ],

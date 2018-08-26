@@ -1,6 +1,12 @@
 
 import '../dev/dev-hot-reload.lsc'
+import { openInMpv } from '../openInMpv.lsc'
 
+contextMenuOptions = {
+  contexts: ['link'],
+  title: 'Open In MPV',
+  id: 'mpv-context-menu'
+}
 
 chrome.declarativeContent.onPageChanged.removeRules(undefined, () ->  // eslint-disable-line no-undefined
   chrome.declarativeContent.onPageChanged.addRules([{
@@ -8,3 +14,7 @@ chrome.declarativeContent.onPageChanged.removeRules(undefined, () ->  // eslint-
     actions: [new chrome.declarativeContent.ShowPageAction()]
   }])
 )
+
+
+chrome.contextMenus.create(contextMenuOptions)
+chrome.contextMenus.onClicked.addListener(({linkUrl}) -> openInMpv(linkUrl))

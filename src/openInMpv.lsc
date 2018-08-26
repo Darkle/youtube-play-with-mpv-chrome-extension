@@ -1,0 +1,14 @@
+import youtubeRegex from 'youtube-regex'
+
+openInMpv(urlString:string):void ->
+  console.log('openInMpv called')
+  console.log(urlString)
+  if !isValidYoutubeUrl(urlString): return
+
+
+isValidYoutubeUrl(urlString:string):boolean ->
+  urlString.length < 1000 && youtubeRegex().test(urlString)
+
+export {
+  openInMpv
+}

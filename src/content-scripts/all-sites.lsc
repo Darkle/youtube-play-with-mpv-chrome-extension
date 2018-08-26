@@ -1,6 +1,5 @@
 import getYoutubeId from 'get-youtube-id'
 
-console.log('all-sites-content-script')
 selector = 'a[href^="https://youtu.be/"], a[href^="https://www.youtube.com/"]'
 
 youtubeLinksVideoIds = [...document.querySelectorAll(selector)].reduce((links, link) ->

@@ -39,6 +39,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "get-youtube-id": "^1.0.0",
-    "nanohtml": "^1.2.4"
+    "nanohtml": "^1.2.4",
+    "youtube-regex": "^1.0.5"
   }
 }
