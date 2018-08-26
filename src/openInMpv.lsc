@@ -1,13 +1,55 @@
 import youtubeRegex from 'youtube-regex'
 
-openInMpv(urlString:string):void ->
+/*****
+* Based on https://github.com/winneon/watch-with-mpv/blob/master/extension/background.js
+*/
+
+type Cookie = {
+  name:string,
+  value:string,
+  domain:string,
+  hostOnly:boolean,
+  path:string,
+  secure:boolean,
+  httpOnly:boolean,
+  sameSite:string,
+  session:boolean,
+  expirationDate: ?number,
+  storeId: string
+};
+
+openInMpv(url:string):void ->
   console.log('openInMpv called')
-  console.log(urlString)
-  if !isValidYoutubeUrl(urlString): return
+  console.log(url)
+  if !isValidYoutubeUrl(url): return
 
+  chrome.cookies.getAll({domain: 'www.youtube.com'}, (cookies:Array<Cookie>) ->
+    chrome.runtime.sendNativeMessage(
+      'moe.winneon.watchwithmpv',
+      {
+        url,
+        cookies: [
+          '# Netscape HTTP Cookie File',
+          ...cookies.map(createCookieString)
+        ],
+        // mpvOptions
+      }
+    )
+  )
 
-isValidYoutubeUrl(urlString:string):boolean ->
-  urlString.length < 1000 && youtubeRegex().test(urlString)
+isValidYoutubeUrl(url:string):boolean ->
+  url.length < 1000 && youtubeRegex().test(url)
+
+createCookieString(cookie:Cookie):string ->
+  expirationDate = cookie.expirationDate ? Math.round(cookie.expirationDate) : 0
+  dot = cookie.domain.startsWith('.').toString().toUpperCase()
+  cookie.domain + ' ' +
+    dot + ' ' +
+    cookie.path + ' ' +
+    cookie.secure.toString().toUpperCase() + ' ' +
+    expirationDate + ' ' +
+    cookie.name + ' ' +
+    cookie.value.replace(/\s/g, '\t')
 
 export {
   openInMpv

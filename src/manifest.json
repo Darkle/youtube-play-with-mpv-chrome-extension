@@ -9,6 +9,8 @@
     "declarativeContent",
     "webNavigation",
     "contextMenus",
+    "cookies",
+    "https://www.youtube.com",
     "https://www.youtube.com/embed/*",
     "https://www.googleapis.com/youtube/v3/*"
   ],
