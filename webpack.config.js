@@ -3,6 +3,7 @@ const path = require('path')
 const webpack = require('webpack')
 const CopyPlugin = require('copy-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
+const Dotenv = require('dotenv-webpack');
 
 const projectDir = path.resolve(__dirname)
 const srcFolder = path.join(projectDir, 'src')
@@ -69,6 +70,7 @@ const webpackOptions = {
   },
   plugins: [
     new webpack.DefinePlugin({ ISDEV }),
+    new Dotenv(),
     new CleanWebpackPlugin(buildFolder),
     new CopyPlugin([
       { from: manifestFile, to: path.join(buildFolder, 'manifest.json') },

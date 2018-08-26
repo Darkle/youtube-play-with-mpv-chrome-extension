@@ -29,6 +29,7 @@
     "copy-webpack-plugin": "^4.5.2",
     "cross-env": "^5.2.0",
     "css-loader": "^1.0.0",
+    "dotenv-webpack": "^1.5.7",
     "eslint": "=4.8.0",
     "style-loader": "^0.22.1",
     "webpack": "^4.17.0",
@@ -38,7 +39,6 @@
   "dependencies": {
     "axios": "^0.18.0",
     "get-youtube-id": "^1.0.0",
-    "nanohtml": "^1.2.4",
-    "p-map": "^1.2.0"
+    "nanohtml": "^1.2.4"
   }
 }

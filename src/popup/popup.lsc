@@ -2,9 +2,9 @@ import './styles/popup.css'
 
 import html from 'nanohtml'
 import axios from 'axios'
-import pMap from 'p-map'
 
-type embedVideo = {videoTitle: ?string, videoId:string};
+type Video = {videoTitle: string, videoId:string};
+type AllSitesMessage = {youtubeLinksVideoIds:Array<string>, allSites: boolean};
 videoLinksContainer = document.querySelector('#videoLinks')
 googleApiUrl = 'https://www.googleapis.com/youtube/v3/videos'
 
@@ -31,20 +31,21 @@ injectContentScripts(tabId:number):void ->
         })
   )
 
-chrome.runtime.onMessage.addListener(messageData ->
+chrome.runtime.onMessage.addListener(messageHandler)
+
+messageHandler(messageData:Video|AllSitesMessage): void ->
   if !messageData.allSites:
     return addLinkToPage(messageData)
-  pMap(getVideoTitles(messageData.youtubeLinksVideoIds), addLinkToPage)
-    .catch(e -> console.error(e))
-)
+  getVideoTitles(messageData.youtubeLinksVideoIds)
+    .then(videoData -> videoData.forEach(addLinkToPage))
 
-addLinkToPage({videoTitle, videoId}:embedVideo):void ->
+addLinkToPage({videoTitle, videoId}:Video):void ->
   // don't add duplicates.
   if document.querySelector(`#mpv-${ videoId }`): return
 
   videoLinksContainer.appendChild(
     html`
-      <a id="${ videoId }" class="linkCard"
+      <a id="mpv-${ videoId }" class="linkCard"
           href="https://www.youtube.com/watch?v=${ videoId }"
           onclick=${ linkClickHandler }>
         <img class="mpvIcon" src="mpv-logo-128.png">
@@ -63,9 +64,18 @@ getVideoTitles(videoIds:Array<string>):Promise ->
   axios.get(googleApiUrl, {
     params: {
       id: videoIds.join(),
-      part: 'snippet'
+      part: 'snippet',
+      key: process.env.YOUTUBE_API_KEY
     }
   }).then(response ->
-    console.log(response)
+    videoItems = response?.data?.items
+    if videoItems?.length < 1: return []
+    videoItems.map(videoItem ->
+      {
+        videoTitle: videoItem?.snippet?.title,
+        videoId: videoItem.id
+      }
+    )
   )
+  .catch(e -> console.error(e))
 

@@ -8,9 +8,10 @@
     "tabs",
     "declarativeContent",
     "webNavigation",
-    "https://www.youtube.com/embed/*"
+    "https://www.youtube.com/embed/*",
+    "https://www.googleapis.com/youtube/v3/*"
   ],
-  "content_security_policy": "default-src 'self'; style-src 'unsafe-inline';img-src * ; font-src 'self' data:;",
+  "content_security_policy": "default-src 'self' ; style-src 'unsafe-inline' ; img-src 'self' data: https://i.ytimg.com; font-src 'self' data: ; connect-src https://www.googleapis.com;",
   "options_page": "options.html",
   "background": {
     "scripts": [
