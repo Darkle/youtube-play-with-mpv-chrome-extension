@@ -68,6 +68,35 @@
       <p class="settingDescription">This setting disables Youtube videos automatically loading when you are viewing a Youtube video page</p>
       <p class="settingDescription">Instead of the video loading, it will give you a choice of either opening the video in mpv or letting it load normally in the page</p>
     </div>
+    <div class="settingContainer" id="oscStyleSetting">
+      <div class="settingInfo">
+        <h5 class="settingHeader">MPV On Screen Controller Style</h5>
+        <p class="settingDescription">The on screen controller shows up when you hover your mouse over the mpv video window</p>
+      </div>
+      <div class="settingInput">
+        <div class="input-field col s12">
+          <select>
+            <option value="bottombar">Bottombar</option>
+            <option value="box">Box</option>
+          </select>
+        </div>
+        <a href="" id="oscStylePreviewLink" target="_blank">
+          Preview
+        </a>
+      </div>
+    </div>
+    <div class="inlineSettingContainer" id="startMPVpausedSetting">
+      <div class="settingHeaderAndInput">
+        <h5 class="settingHeader">Start MPV Paused</h5>
+        <div class="settingInput">
+          <label>
+            <input type="checkbox" id="startMPVpaused" class="filled-in" />
+            <span></span>
+          </label>
+        </div>
+      </div>
+      <p class="settingDescription">This makes mpv pause the video as soon as it is loaded</p>
+    </div>
   </div>
   <script src="jquery-3.3.1.min.js"></script>
   <script src="materialize.js"></script>

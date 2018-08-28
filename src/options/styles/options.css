@@ -5,13 +5,21 @@ body{
 }
 
 #mainContainer{
-  width: 470px;
+  width: 580px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#mainContainer>div:last-child{
+  margin-bottom: 60px;
 }
 
 .settingContainer{
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  width: 370px;
+  margin-bottom: 20px;
 }
 
 .settingContainer .settingInfo h5{
@@ -41,11 +49,10 @@ body{
 }
 
 .inlineSettingContainer{
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-bottom: 20px;
   display: flex;
   flex-direction: column;
+  width: 370px;
+  margin-bottom: 20px;
 }
 
 .inlineSettingContainer .settingDescription{
@@ -85,8 +92,24 @@ body{
   max-width: 296px;
 }
 
+#alwaysOnTopSetting{
+  /* padding-bottom: 24px; */
+}
+
+#videoQualitySetting{
+  margin-bottom: 8px;
+}
+
 #videoQualitySetting .settingDescription{
   margin-bottom: -10px;
+}
+
+#mpvWindowSizeSetting{
+  margin-bottom: 26px;
+}
+
+#mpvWindowSizeSetting .settingDescription{
+ margin-bottom: 8px;
 }
 
 #mpvWindowSizeSliderOutput {
@@ -94,7 +117,18 @@ body{
   flex-shrink: 0;
   margin-left: 20px;
   flex-basis: 81px;
+  margin-right: -50px;
 }
 #mpvWindowSizeSlider{
   flex-grow: 1;
+}
+
+#oscStyleSetting{
+  margin-bottom: 8px;
+}
+
+#oscStylePreviewLink{
+  margin-left: 40px;
+  font-size: 1.3em;
+  color: #754A72;
 }

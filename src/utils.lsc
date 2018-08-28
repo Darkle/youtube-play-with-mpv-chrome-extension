@@ -1,10 +1,12 @@
 
-storageKeys = [
+settingsStorageKeys = [
   'volume',
   'alwaysOnTop',
   'videoQuality',
   'mpvWindowSize',
-  'dontLetYTpageVideoAutoLoad'
+  'dontLetYTpageVideoAutoLoad',
+  'oscStyle',
+  'startMPVpaused'
 ]
 
 pipe(...fns) -> param -> fns.reduce((result, fn) -> fn(result), param)
@@ -12,5 +14,5 @@ pipe(...fns) -> param -> fns.reduce((result, fn) -> fn(result), param)
 
 export {
   pipe,
-  storageKeys
+  settingsStorageKeys
 }

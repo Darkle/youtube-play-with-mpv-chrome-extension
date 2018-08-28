@@ -10,7 +10,9 @@ type Settings = {
   alwaysOnTop: boolean,
   videoQuality: string,
   mpvWindowSize: string,
-  dontLetYTpageVideoAutoLoad: boolean
+  dontLetYTpageVideoAutoLoad: boolean,
+  oscStyle: string,
+  startMPVpaused: boolean
 };
 
 //TODO:validate the options and set them to a default if not valid - also set it to not do anything if the new
@@ -24,6 +26,7 @@ mpvWindowSizeSlider = $('#mpvWindowSizeSlider')
 mpvWindowSizeSliderOutput = $('#mpvWindowSizeSliderOutput')
 alwaysOnTopInput = $('#alwaysOnTop')
 dontLetYTpageVideoAutoLoadInput = $('#dontLetYTpageVideoAutoLoad')
+oscStylePreviewLink = $('#oscStylePreviewLink')
 volumeSliderSettings = {
   range: {
     'min': [0],
@@ -34,6 +37,10 @@ volumeSliderSettings = {
 windowSizeSliderSettings = {
   step: 10,
 }
+oscStylePreviewLinkHref = {
+  'bottombar': 'https://i.imgur.com/Vxs3B77.jpg',
+  'box': 'https://i.imgur.com/7vDvAHs.jpg'
+}
 
 chrome.storage.local.get(storageKeys, setUpPage)
 
@@ -41,6 +48,7 @@ updateInputValues(settings:Settings):void ->
   $('select').formSelect()
   alwaysOnTopInput[0].checked = settings.alwaysOnTop
   dontLetYTpageVideoAutoLoadInput[0].checked = settings.dontLetYTpageVideoAutoLoad
+  oscStylePreviewLink.attr('href', oscStylePreviewLinkHref[settings.oscStyle])
 
   noUiSlider.create(volumeSlider[0],
     { start: [settings.volume], ...volumeSliderSettings }
