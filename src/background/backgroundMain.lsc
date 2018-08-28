@@ -26,7 +26,7 @@ chrome.declarativeContent.onPageChanged.removeRules(undefined, () ->  // eslint-
 chrome.contextMenus.create(contextMenuOptions)
 chrome.contextMenus.onClicked.addListener(({linkUrl}) -> openInMpv(linkUrl))
 
-if ISDEV: chrome.storage.local.clear()
+// if ISDEV: chrome.storage.local.clear()
 
 chrome.storage.local.get(settingsStorageKeys, setUpDefaultSettings)
 

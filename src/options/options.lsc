@@ -19,7 +19,7 @@ type Settings = {
 //value is the same as the old one so as we dont get in to a loop
 
 sixteenByNineRatio = 1.7777777777777777
-setUpPage = pipe(updateInputValues, setUpEventListeners)
+setUpPage = pipe(setUpInputInitialValues, setUpEventListeners)
 volumeSlider = $('#volumeSlider')
 volumeSliderOutput = $('#volumeSliderOutput')
 mpvWindowSizeSlider = $('#mpvWindowSizeSlider')
@@ -27,6 +27,9 @@ mpvWindowSizeSliderOutput = $('#mpvWindowSizeSliderOutput')
 alwaysOnTopInput = $('#alwaysOnTop')
 dontLetYTpageVideoAutoLoadInput = $('#dontLetYTpageVideoAutoLoad')
 oscStylePreviewLink = $('#oscStylePreviewLink')
+startMPVpausedInput = $('#startMPVpaused')
+oscStyleInput = $('#oscStyle')
+videoQualityInput = $('#videoQuality')
 volumeSliderSettings = {
   range: {
     'min': [0],
@@ -44,11 +47,14 @@ oscStylePreviewLinkHref = {
 
 chrome.storage.local.get(storageKeys, setUpPage)
 
-updateInputValues(settings:Settings):void ->
+setUpInputInitialValues(settings:Settings):void ->
   $('select').formSelect()
   alwaysOnTopInput[0].checked = settings.alwaysOnTop
   dontLetYTpageVideoAutoLoadInput[0].checked = settings.dontLetYTpageVideoAutoLoad
+  startMPVpausedInput[0].checked = settings.startMPVpaused
   oscStylePreviewLink.attr('href', oscStylePreviewLinkHref[settings.oscStyle])
+  oscStyleInput.val(settings.oscStyle)
+  videoQualityInput.val(settings.videoQuality)
 
   noUiSlider.create(volumeSlider[0],
     { start: [settings.volume], ...volumeSliderSettings }
@@ -82,7 +88,6 @@ setUpEventListeners():void ->
     if e.which === 37: volumeSlider[0].noUiSlider.set(value - 1)
     if e.which === 39: volumeSlider[0].noUiSlider.set(value + 1)
   )
-
   mpvWindowSizeSlider[0].noUiSlider.on('update', (values, handle) ->
     mpvWindowSize = generateWindowSize(values[handle])
     mpvWindowSizeSliderOutput.text(mpvWindowSize)
@@ -92,6 +97,22 @@ setUpEventListeners():void ->
     value = Number(mpvWindowSizeSlider[0].noUiSlider.get())
     if e.which === 37: mpvWindowSizeSlider[0].noUiSlider.set(value - 10)
     if e.which === 39: mpvWindowSizeSlider[0].noUiSlider.set(value + 10)
+  )
+  alwaysOnTopInput.on('change', e ->
+    chrome.storage.local.set({alwaysOnTop: e.currentTarget.checked})
+  )
+  dontLetYTpageVideoAutoLoadInput.on('change', e ->
+    chrome.storage.local.set({dontLetYTpageVideoAutoLoad: e.currentTarget.checked})
+  )
+  startMPVpausedInput.on('change', e ->
+    chrome.storage.local.set({startMPVpaused: e.currentTarget.checked})
+  )
+  oscStyleInput.on('change', e ->
+    oscStylePreviewLink.attr('href', oscStylePreviewLinkHref[e.currentTarget.value])
+    chrome.storage.local.set({oscStyle: e.currentTarget.value})
+  )
+  videoQualityInput.on('change', e ->
+    chrome.storage.local.set({videoQuality: e.currentTarget.value})
   )
 
 generateWindowSize(sliderValue:string):string ->
