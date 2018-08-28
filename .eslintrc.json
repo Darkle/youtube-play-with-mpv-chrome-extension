@@ -5,7 +5,9 @@
   ],
   "globals": {
     "ISDEV": true,
-    "chrome": true
+    "chrome": true,
+    "noUiSlider": true,
+    "$": true
   },
   "env": {
     "browser": true,

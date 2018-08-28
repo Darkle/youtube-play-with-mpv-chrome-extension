@@ -1,0 +1,106 @@
+import './styles/font.css'
+import './noUiSlider/nouislider.css'
+import './materialize/css/materialize.css'
+import './styles/options.css'
+
+import { pipe, storageKeys } from '../utils.lsc'
+
+type Settings = {
+  volume: number,
+  alwaysOnTop: boolean,
+  videoQuality: string,
+  mpvWindowSize: string,
+  dontLetYTpageVideoAutoLoad: boolean
+};
+
+//TODO:validate the options and set them to a default if not valid - also set it to not do anything if the new
+//value is the same as the old one so as we dont get in to a loop
+
+sixteenByNineRatio = 1.7777777777777777
+setUpPage = pipe(updateInputValues, setUpEventListeners)
+volumeSlider = $('#volumeSlider')
+volumeSliderOutput = $('#volumeSliderOutput')
+mpvWindowSizeSlider = $('#mpvWindowSizeSlider')
+mpvWindowSizeSliderOutput = $('#mpvWindowSizeSliderOutput')
+alwaysOnTopInput = $('#alwaysOnTop')
+dontLetYTpageVideoAutoLoadInput = $('#dontLetYTpageVideoAutoLoad')
+volumeSliderSettings = {
+  range: {
+    'min': [0],
+    'max': [100]
+  },
+  step: 1,
+}
+windowSizeSliderSettings = {
+  step: 10,
+}
+
+chrome.storage.local.get(storageKeys, setUpPage)
+
+updateInputValues(settings:Settings):void ->
+  $('select').formSelect()
+  alwaysOnTopInput[0].checked = settings.alwaysOnTop
+  dontLetYTpageVideoAutoLoadInput[0].checked = settings.dontLetYTpageVideoAutoLoad
+
+  noUiSlider.create(volumeSlider[0],
+    { start: [settings.volume], ...volumeSliderSettings }
+  )
+  volumeSliderOutput.text(settings.volume)
+
+  noUiSlider.create(mpvWindowSizeSlider[0],
+    {
+      start: [
+        Number(settings.mpvWindowSize.split('x')[0])
+      ],
+      range: {
+        'min': [320],
+        'max': [window.screen.availWidth]
+      },
+      ...windowSizeSliderSettings
+    }
+  )
+  mpvWindowSizeSliderOutput.text(settings.mpvWindowSize)
+
+
+setUpEventListeners():void ->
+//TODO: make sure to cast them to their proper values here - like number and boolean as they might be text
+  volumeSlider[0].noUiSlider.on('update', (values, handle) ->
+    volume = Number(values[handle].split('.')[0])
+    volumeSliderOutput.text(volume)
+    chrome.storage.local.set({volume})
+  )
+  volumeSlider.find('.noUi-handle').on('keydown', e ->
+    value = Number(volumeSlider[0].noUiSlider.get())
+    if e.which === 37: volumeSlider[0].noUiSlider.set(value - 1)
+    if e.which === 39: volumeSlider[0].noUiSlider.set(value + 1)
+  )
+
+  mpvWindowSizeSlider[0].noUiSlider.on('update', (values, handle) ->
+    mpvWindowSize = generateWindowSize(values[handle])
+    mpvWindowSizeSliderOutput.text(mpvWindowSize)
+    chrome.storage.local.set({mpvWindowSize})
+  )
+  mpvWindowSizeSlider.find('.noUi-handle').on('keydown', e ->
+    value = Number(mpvWindowSizeSlider[0].noUiSlider.get())
+    if e.which === 37: mpvWindowSizeSlider[0].noUiSlider.set(value - 10)
+    if e.which === 39: mpvWindowSizeSlider[0].noUiSlider.set(value + 10)
+  )
+
+generateWindowSize(sliderValue:string):string ->
+  width = Number(sliderValue.split('.')[0])
+  `${ width }x${ Math.round(width/sixteenByNineRatio) }`
+
+//TODO:do below
+  // Array.from(optionElements).forEach(inputElem => {
+
+  //   inputElem.addEventListener('change', saveOptions)
+
+  //   if(inputElem.dataset.settingKey === 'extensionToken'){
+  //     /*****
+  //     * Also need .addEventListener('input' for extensionToken Input as $('input').addEventListener('change'
+  //     * only fires for text input change once it loses focus, so using .addEventListener('input' as
+  //     * well so it saves straight away on paste.
+  //     */
+  //     inputElem.addEventListener('input', saveOptions)
+  //   }
+  // })

@@ -12,6 +12,9 @@ const manifestFile = path.join(srcFolder, 'manifest.json')
 const iconFile = path.join(srcFolder, 'images', 'mpv-logo-128.png')
 const optionsHtmlFile = path.join(srcFolder, 'options', 'options.html')
 const optionsJSFile = path.join(srcFolder, 'options', 'options.lsc')
+const jQueryJSFile = path.join(srcFolder, 'options', 'jquery-3.3.1.min.js')
+const nouisliderJSFile = path.join(srcFolder, 'options', 'noUiSlider', 'nouislider.js')
+const materializeJSFile = path.join(srcFolder, 'options', 'materialize', 'js', 'materialize.js')
 const popupHtmlFile = path.join(srcFolder, 'popup', 'popup.html')
 const popupJSFile = path.join(srcFolder, 'popup', 'popup.lsc')
 const backgroundEntryPoint = path.join(srcFolder, 'background', 'backgroundMain.lsc')
@@ -77,6 +80,9 @@ const webpackOptions = {
       { from: optionsHtmlFile, to: path.join(buildFolder, 'options.html') },
       { from: popupHtmlFile, to: path.join(buildFolder, 'popup.html') },
       { from: iconFile, to: path.join(buildFolder, 'mpv-logo-128.png') },
+      { from: jQueryJSFile, to: path.join(buildFolder, 'jquery-3.3.1.min.js') },
+      { from: materializeJSFile, to: path.join(buildFolder, 'materialize.js') },
+      { from: nouisliderJSFile, to: path.join(buildFolder, 'nouislider.js') },
       // { from: ytContentScriptCSS, to: path.join(buildFolder, 'youtube.css') },
     ]),
   ]

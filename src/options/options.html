@@ -2,23 +2,77 @@
 <html>
 
 <head>
-  <style>
-    button {
-      height: 30px;
-      width: 30px;
-      outline: none;
-      margin: 10px;
-    }
-  </style>
 </head>
 
 <body>
-  <div id="buttonDiv">
+  <div id="mainContainer">
+    <div class="settingContainer" id="volumeSetting">
+      <div class="settingInfo">
+        <h5 class="settingHeader">Default Volume Level</h5>
+        <p class="settingDescription">Sets the volume that each video will be opened with.</p>
+        <p class="settingDescription">(you can change the video volume once the video is opened)</p>
+      </div>
+      <div class="settingInput">
+        <div id="volumeSlider"></div>
+        <div id="volumeSliderOutput"></div>
+      </div>
+    </div>
+    <div class="inlineSettingContainer" id="alwaysOnTopSetting">
+      <div class="settingHeaderAndInput">
+        <h5 class="settingHeader">Always On Top</h5>
+        <div class="settingInput">
+          <label>
+            <input type="checkbox" id="alwaysOnTop" class="filled-in" />
+            <span></span>
+          </label>
+        </div>
+      </div>
+      <p class="settingDescription">Makes the mpv video stay on top of all other windows</p>
+    </div>
+    <div class="settingContainer" id="videoQualitySetting">
+      <div class="settingInfo">
+        <h5 class="settingHeader">Youtube Video Quality</h5>
+        <p class="settingDescription">Sets the video quality to get from Youtube</p>
+      </div>
+      <div class="settingInput">
+        <div class="input-field col s12">
+          <select>
+            <option value="original">Best Available</option>
+            <option value="22">1280x720</option>
+            <option value="18">640x360</option>
+            <option value="36">320x180</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="settingContainer" id="mpvWindowSizeSetting">
+      <div class="settingInfo">
+        <h5 class="settingHeader">MPV Window Size</h5>
+        <p class="settingDescription">The size of the mpv window</p>
+      </div>
+      <div class="settingInput">
+        <div id="mpvWindowSizeSlider"></div>
+        <div id="mpvWindowSizeSliderOutput"></div>
+      </div>
+    </div>
+    <div class="inlineSettingContainer" id="dontLetYTpageVideoAutoLoadSetting">
+      <div class="settingHeaderAndInput">
+        <h5 class="settingHeader">Don't Let Youtube Page Video Autoload</h5>
+        <div class="settingInput">
+          <label>
+            <input type="checkbox" id="dontLetYTpageVideoAutoLoad" class="filled-in" />
+            <span></span>
+          </label>
+        </div>
+      </div>
+      <p class="settingDescription">This setting disables Youtube videos automatically loading when you are viewing a Youtube video page</p>
+      <p class="settingDescription">Instead of the video loading, it will give you a choice of either opening the video in mpv or letting it load normally in the page</p>
+    </div>
   </div>
-  <div>
-    <p>Choose a different background color!</p>
-  </div>
+  <script src="jquery-3.3.1.min.js"></script>
+  <script src="materialize.js"></script>
+  <script src="nouislider.js"></script>
+  <script src="options.js"></script>
 </body>
-<script src="options.js"></script>
 
 </html>

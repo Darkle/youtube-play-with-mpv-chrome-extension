@@ -1,11 +1,19 @@
 
 import '../dev/dev-hot-reload.lsc'
 import { openInMpv } from '../openInMpv.lsc'
+import { storageKeys } from '../utils.lsc'
 
 contextMenuOptions = {
   contexts: ['link'],
   title: 'Open In MPV',
   id: 'mpv-context-menu'
+}
+defaultSettings = {
+  volume: 70,
+  alwaysOnTop: false,
+  videoQuality: 'original',
+  mpvWindowSize: '1280x720',
+  dontLetYTpageVideoAutoLoad: false
 }
 
 chrome.declarativeContent.onPageChanged.removeRules(undefined, () ->  // eslint-disable-line no-undefined
@@ -14,7 +22,13 @@ chrome.declarativeContent.onPageChanged.removeRules(undefined, () ->  // eslint-
     actions: [new chrome.declarativeContent.ShowPageAction()]
   }])
 )
-
-
 chrome.contextMenus.create(contextMenuOptions)
 chrome.contextMenus.onClicked.addListener(({linkUrl}) -> openInMpv(linkUrl))
+
+if ISDEV: chrome.storage.local.clear()
+
+chrome.storage.local.get(storageKeys, setUpDefaultSettings)
+
+setUpDefaultSettings(settings) ->
+  if settings?.length > 0: return
+  chrome.storage.local.set(defaultSettings)

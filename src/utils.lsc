@@ -1,0 +1,16 @@
+
+storageKeys = [
+  'volume',
+  'alwaysOnTop',
+  'videoQuality',
+  'mpvWindowSize',
+  'dontLetYTpageVideoAutoLoad'
+]
+
+pipe(...fns) -> param -> fns.reduce((result, fn) -> fn(result), param)
+
+
+export {
+  pipe,
+  storageKeys
+}

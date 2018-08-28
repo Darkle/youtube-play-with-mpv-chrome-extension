@@ -1,3 +1,4 @@
+import './styles/font.css'
 import './styles/popup.css'
 
 import html from 'nanohtml'
@@ -16,7 +17,6 @@ chrome.tabs.query({active: true, currentWindow: true}, tabs ->
     openInMpv(activeTabUrl)
     window.close()
   else:
-    // videoLinksContainer.style.display = 'flex'
     injectContentScripts(tabs[0].id)
 )
 

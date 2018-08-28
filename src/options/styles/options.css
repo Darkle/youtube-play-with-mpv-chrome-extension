@@ -1,0 +1,100 @@
+
+body{
+  font-family: 'Open Sans', sans-serif;
+  /* width: 500px */
+}
+
+#mainContainer{
+  width: 470px;
+}
+
+.settingContainer{
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
+}
+
+.settingContainer .settingInfo h5{
+  font-size: 1.5em;
+}
+
+.settingContainer .settingDescription{
+  margin-left: 10px;
+  margin-right: 10px;
+  font-size: 1.2em;
+  max-width: 380px;
+}
+
+.settingDescription:first-of-type{
+  margin-bottom: 0;
+}
+
+.settingDescription:nth-of-type(n+2){
+  margin-top: 0;
+}
+
+.settingContainer .settingInput{
+  display:flex;
+  align-items: center;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.inlineSettingContainer{
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.inlineSettingContainer .settingDescription{
+  font-size: 1.2em;
+  margin-top: 8px;
+  margin-left: 10px;
+  margin-right: 10px;
+  max-width: 380px;
+}
+
+.inlineSettingContainer .settingHeaderAndInput{
+  align-items: center;
+  display: flex;
+}
+
+.inlineSettingContainer .settingHeaderAndInput h5{
+  font-size: 1.5em;
+  margin-right: 20px;
+}
+
+.inlineSettingContainer .settingHeaderAndInput .settingInput{
+  margin-top: 16px;
+}
+
+.noUi-target {
+  max-width: 300px;
+}
+
+#volumeSliderOutput {
+  font-size: 1.5em;
+  flex-shrink: 0;
+  margin-left: 20px;
+  flex-basis: 28px;
+}
+#volumeSlider{
+  flex-grow: 1;
+  max-width: 296px;
+}
+
+#videoQualitySetting .settingDescription{
+  margin-bottom: -10px;
+}
+
+#mpvWindowSizeSliderOutput {
+  font-size: 1.5em;
+  flex-shrink: 0;
+  margin-left: 20px;
+  flex-basis: 81px;
+}
+#mpvWindowSizeSlider{
+  flex-grow: 1;
+}
