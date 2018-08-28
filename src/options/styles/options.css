@@ -92,10 +92,6 @@ body{
   max-width: 296px;
 }
 
-#alwaysOnTopSetting{
-  /* padding-bottom: 24px; */
-}
-
 #videoQualitySetting{
   margin-bottom: 8px;
 }
@@ -104,22 +100,26 @@ body{
   margin-bottom: -10px;
 }
 
-#mpvWindowSizeSetting{
+#defaultMpvWindowSizeSetting{
   margin-bottom: 26px;
 }
 
-#mpvWindowSizeSetting .settingDescription{
+#defaultMpvWindowSizeSetting .settingDescription{
  margin-bottom: 8px;
 }
 
-#mpvWindowSizeSliderOutput {
+#defaultMpvWindowSizeSetting .settingDescription:last-child{
+ margin-bottom: 14px;
+}
+
+#defaultMpvWindowSizeSliderOutput {
   font-size: 1.5em;
   flex-shrink: 0;
   margin-left: 20px;
   flex-basis: 81px;
   margin-right: -50px;
 }
-#mpvWindowSizeSlider{
+#defaultMpvWindowSizeSlider{
   flex-grow: 1;
 }
 

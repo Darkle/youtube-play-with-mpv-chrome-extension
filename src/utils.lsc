@@ -3,7 +3,7 @@ settingsStorageKeys = [
   'volume',
   'alwaysOnTop',
   'videoQuality',
-  'mpvWindowSize',
+  'defaultMpvWindowSize',
   'dontLetYTpageVideoAutoLoad',
   'oscStyle',
   'startMPVpaused'

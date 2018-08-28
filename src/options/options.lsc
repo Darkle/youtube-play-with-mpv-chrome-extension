@@ -8,22 +8,19 @@ import { pipe, storageKeys } from '../utils.lsc'
 type Settings = {
   volume: number,
   alwaysOnTop: boolean,
-  videoQuality: string,
-  mpvWindowSize: string,
+  videoQuality: string|number,
+  defaultMpvWindowSize: string,
   dontLetYTpageVideoAutoLoad: boolean,
   oscStyle: string,
   startMPVpaused: boolean
 };
 
-//TODO:validate the options and set them to a default if not valid - also set it to not do anything if the new
-//value is the same as the old one so as we dont get in to a loop
-
 sixteenByNineRatio = 1.7777777777777777
 setUpPage = pipe(setUpInputInitialValues, setUpEventListeners)
 volumeSlider = $('#volumeSlider')
 volumeSliderOutput = $('#volumeSliderOutput')
-mpvWindowSizeSlider = $('#mpvWindowSizeSlider')
-mpvWindowSizeSliderOutput = $('#mpvWindowSizeSliderOutput')
+defaultMpvWindowSizeSlider = $('#defaultMpvWindowSizeSlider')
+defaultMpvWindowSizeSliderOutput = $('#defaultMpvWindowSizeSliderOutput')
 alwaysOnTopInput = $('#alwaysOnTop')
 dontLetYTpageVideoAutoLoadInput = $('#dontLetYTpageVideoAutoLoad')
 oscStylePreviewLink = $('#oscStylePreviewLink')
@@ -37,9 +34,6 @@ volumeSliderSettings = {
   },
   step: 1,
 }
-windowSizeSliderSettings = {
-  step: 10,
-}
 oscStylePreviewLinkHref = {
   'bottombar': 'https://i.imgur.com/Vxs3B77.jpg',
   'box': 'https://i.imgur.com/7vDvAHs.jpg'
@@ -48,36 +42,37 @@ oscStylePreviewLinkHref = {
 chrome.storage.local.get(storageKeys, setUpPage)
 
 setUpInputInitialValues(settings:Settings):void ->
-  $('select').formSelect()
+  if ISDEV: console.log('settings: ', settings)
   alwaysOnTopInput[0].checked = settings.alwaysOnTop
   dontLetYTpageVideoAutoLoadInput[0].checked = settings.dontLetYTpageVideoAutoLoad
   startMPVpausedInput[0].checked = settings.startMPVpaused
   oscStylePreviewLink.attr('href', oscStylePreviewLinkHref[settings.oscStyle])
   oscStyleInput.val(settings.oscStyle)
   videoQualityInput.val(settings.videoQuality)
+  $('select').formSelect()  // this has to come after you alter the select dropdown values
 
   noUiSlider.create(volumeSlider[0],
     { start: [settings.volume], ...volumeSliderSettings }
   )
   volumeSliderOutput.text(settings.volume)
 
-  noUiSlider.create(mpvWindowSizeSlider[0],
+  defaultMpvWindowSize = settings.defaultMpvWindowSize
+
+  noUiSlider.create(defaultMpvWindowSizeSlider[0],
     {
       start: [
-        Number(settings.mpvWindowSize.split('x')[0])
+        Number(if defaultMpvWindowSize === 'off': 0 else: defaultMpvWindowSize.split('x')[0])
       ],
       range: {
-        'min': [320],
+        'min': [0],
         'max': [window.screen.availWidth]
       },
-      ...windowSizeSliderSettings
+      step: 20
     }
   )
-  mpvWindowSizeSliderOutput.text(settings.mpvWindowSize)
-
+  defaultMpvWindowSizeSliderOutput.text(settings.defaultMpvWindowSize)
 
 setUpEventListeners():void ->
-//TODO: make sure to cast them to their proper values here - like number and boolean as they might be text
   volumeSlider[0].noUiSlider.on('update', (values, handle) ->
     volume = Number(values[handle].split('.')[0])
     volumeSliderOutput.text(volume)
@@ -88,15 +83,15 @@ setUpEventListeners():void ->
     if e.which === 37: volumeSlider[0].noUiSlider.set(value - 1)
     if e.which === 39: volumeSlider[0].noUiSlider.set(value + 1)
   )
-  mpvWindowSizeSlider[0].noUiSlider.on('update', (values, handle) ->
-    mpvWindowSize = generateWindowSize(values[handle])
-    mpvWindowSizeSliderOutput.text(mpvWindowSize)
-    chrome.storage.local.set({mpvWindowSize})
+  defaultMpvWindowSizeSlider[0].noUiSlider.on('update', (values, handle) ->
+    defaultMpvWindowSize = generateWindowSize(values[handle])
+    defaultMpvWindowSizeSliderOutput.text(defaultMpvWindowSize)
+    chrome.storage.local.set({defaultMpvWindowSize})
   )
-  mpvWindowSizeSlider.find('.noUi-handle').on('keydown', e ->
-    value = Number(mpvWindowSizeSlider[0].noUiSlider.get())
-    if e.which === 37: mpvWindowSizeSlider[0].noUiSlider.set(value - 10)
-    if e.which === 39: mpvWindowSizeSlider[0].noUiSlider.set(value + 10)
+  defaultMpvWindowSizeSlider.find('.noUi-handle').on('keydown', e ->
+    value = Number(defaultMpvWindowSizeSlider[0].noUiSlider.get())
+    if e.which === 37: defaultMpvWindowSizeSlider[0].noUiSlider.set(value - 20)
+    if e.which === 39: defaultMpvWindowSizeSlider[0].noUiSlider.set(value + 20)
   )
   alwaysOnTopInput.on('change', e ->
     chrome.storage.local.set({alwaysOnTop: e.currentTarget.checked})
@@ -117,19 +112,7 @@ setUpEventListeners():void ->
 
 generateWindowSize(sliderValue:string):string ->
   width = Number(sliderValue.split('.')[0])
+  if width < 310: return 'off'
   `${ width }x${ Math.round(width/sixteenByNineRatio) }`
 
-//TODO:do below
-  // Array.from(optionElements).forEach(inputElem => {
 
-  //   inputElem.addEventListener('change', saveOptions)
-
-  //   if(inputElem.dataset.settingKey === 'extensionToken'){
-  //     /*****
-  //     * Also need .addEventListener('input' for extensionToken Input as $('input').addEventListener('change'
-  //     * only fires for text input change once it loses focus, so using .addEventListener('input' as
-  //     * well so it saves straight away on paste.
-  //     */
-  //     inputElem.addEventListener('input', saveOptions)
-  //   }
-  // })

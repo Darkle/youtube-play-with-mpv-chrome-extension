@@ -12,9 +12,10 @@ defaultSettings = {
   volume: 70,
   alwaysOnTop: false,
   videoQuality: 'original',
-  mpvWindowSize: '1280x720',
+  defaultMpvWindowSize: 'off',
   dontLetYTpageVideoAutoLoad: false,
-  oscStyle: 'bottombar'
+  oscStyle: 'bottombar',
+  startMPVpaused: false
 }
 
 chrome.declarativeContent.onPageChanged.removeRules(undefined, () ->  // eslint-disable-line no-undefined
