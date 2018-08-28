@@ -1,0 +1,36 @@
+/*****
+* Based on https://greasyfork.org/en/scripts/370504-youtube-stop-autoplay-2018-edition/code
+* We need to insert the script, otherwise we can't access the .pauseVideo() method that is
+* attached to the playerElement.
+*/
+stopAutoplayScript = `
+  var videoElement = document.querySelector('video')
+  var playerElement = document.querySelector('.html5-video-player')
+  function stopAutoplay(){
+    videoElement.addEventListener('play',
+      () => {
+        playerElement.pauseVideo()
+      },
+      {once: true}
+    )
+    videoElement.addEventListener('playing',
+      () => {
+        playerElement.pauseVideo()
+      },
+      {once: true}
+    )
+    videoElement.addEventListener('timeupdate',
+      () => {
+        playerElement.pauseVideo()
+      },
+      {once: true}
+    )
+  }
+  window.addEventListener('spfdone', stopAutoplay)
+  window.addEventListener('yt-navigate-finish', stopAutoplay)
+  stopAutoplay()
+`
+
+export {
+  stopAutoplayScript
+}

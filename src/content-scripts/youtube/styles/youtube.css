@@ -1,0 +1,35 @@
+
+#openInMpvButton {
+  cursor: pointer;
+  border: none;
+  font-size: 1.5em;
+  position: absolute;
+  left: -150px;
+  top: 8px;
+  display: flex;
+  align-items: center;
+  color: #754A72;
+  background-color: transparent;
+  background-image: none;
+  border-color: #754A72;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  user-select: none;
+  padding: .5rem .8rem;
+  line-height: 1.5;
+  border-radius: .15rem;
+  transition: .2s ease;
+}
+
+#openInMpvButton:hover{
+  color: #fff;
+  background-color: #754A72;
+  border-color: #754A72;
+}
+
+#openInMpvButton img{
+ width:30px;
+ margin-left:4px;
+}
+

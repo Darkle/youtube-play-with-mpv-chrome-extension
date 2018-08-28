@@ -46,5 +46,8 @@
   "icons": {
     "128": "mpv-logo-128.png"
   },
+  "web_accessible_resources": [
+    "mpv-logo-128.png"
+  ],
   "manifest_version": 2
 }

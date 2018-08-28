@@ -1,3 +1,38 @@
 import './styles/youtube.css'
 
-console.log('yiutube 111')
+import { stopAutoplayScript } from './stopAutoplayScript.lsc'
+import { openInMpv } from '../../openInMpv.lsc'
+
+observerConfig = { childList: true, subtree: true }
+
+ytAppElement = document.getElementsByTagName('ytd-app')[0]
+
+script = document.createElement('script')
+script.textContent = stopAutoplayScript
+script.setAttribute('id', 'mpvInsertedScript')
+
+chrome.storage.local.get(['dontLetYTpageVideoAutoLoad'], settings ->
+  if !settings.dontLetYTpageVideoAutoLoad: return
+  document.head.appendChild(script)
+)
+
+openInMpvButton = document.createElement('button')
+openInMpvButton.setAttribute('id', 'openInMpvButton')
+span = document.createElement('span')
+span.textContent = 'Open In MPV'
+mpvImage = document.createElement('img')
+mpvImage.setAttribute('src', chrome.runtime.getURL('mpv-logo-128.png'))
+
+openInMpvButton.appendChild(span)
+openInMpvButton.appendChild(mpvImage)
+
+openInMpvButton.addEventListener('mouseup', () -> need to send this to background whcih will call openInMpv (window.location.href))
+
+observer = new MutationObserver(observerCallback)
+observer.observe(ytAppElement, observerConfig)
+
+observerCallback(mutationsList):void ->
+  for elem mutation in mutationsList:
+    if mutation.type == 'childList' && mutation.target.id === 'info-contents':
+      document.querySelector('#menu-container').prepend(openInMpvButton)
+      observer.disconnect()
