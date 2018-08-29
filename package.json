@@ -1,5 +1,5 @@
 {
-  "name": "yt-play-with-mpv",
+  "name": "youtube-play-with-mpv-chrome-extension",
   "version": "1.0.0",
   "description": "",
   "main": "webpack.config.js",
@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Darkle/yt-play-with-mpv.git"
+    "url": "git+https://github.com/Darkle/youtube-play-with-mpv-chrome-extension.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Darkle/yt-play-with-mpv/issues"
+    "url": "https://github.com/Darkle/youtube-play-with-mpv-chrome-extension/issues"
   },
-  "homepage": "https://github.com/Darkle/yt-play-with-mpv#readme",
+  "homepage": "https://github.com/Darkle/youtube-play-with-mpv-chrome-extension",
   "devDependencies": {
     "@oigroup/babel-preset-lightscript": "^3.1.1",
     "@oigroup/lightscript-eslint": "^3.1.1",
