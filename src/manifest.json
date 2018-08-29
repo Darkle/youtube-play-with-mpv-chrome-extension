@@ -39,7 +39,7 @@
       ]
     }
   ],
-  "page_action": {
+  "browser_action": {
     "default_popup": "popup.html",
     "default_icon": {
       "128": "mpv-logo-128.png"

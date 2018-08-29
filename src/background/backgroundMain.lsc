@@ -18,12 +18,6 @@ defaultSettings = {
   startMPVpaused: false
 }
 
-chrome.declarativeContent.onPageChanged.removeRules(undefined, () ->  // eslint-disable-line no-undefined
-  chrome.declarativeContent.onPageChanged.addRules([{
-    conditions: [new chrome.declarativeContent.PageStateMatcher()],
-    actions: [new chrome.declarativeContent.ShowPageAction()]
-  }])
-)
 chrome.contextMenus.create(contextMenuOptions)
 chrome.contextMenus.onClicked.addListener(({linkUrl}) -> openInMpv(linkUrl))
 
