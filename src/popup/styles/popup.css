@@ -69,13 +69,7 @@ body{
   opacity: 0.8;
 }
 .linkCard h5{
-  /* font-family: 'Lato', sans-serif; */
-  /* font-family: 'Roboto', sans-serif; */
-  /*   font-family: 'Kosugi', sans-serif; */
   font-family: 'Open Sans', sans-serif;
-  color:#443C88;
-/*   color: #827280; */
-/*   color: #561500; */
   color: #50424F;
   font-size:1.4em;
   word-break: break-word;
