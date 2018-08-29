@@ -1,8 +1,9 @@
-import getYoutubeId from 'get-youtube-id'
+import { YouTubeURLParser } from '@iktakahiro/youtube-url-parser'
 
 videoTitleLink = document.querySelector('.ytp-title-link')
+parser = new YouTubeURLParser(videoTitleLink?.href)
 videoTitle = videoTitleLink?.textContent
-videoId = getYoutubeId(videoTitleLink?.href)
+videoId = parser.getId()
 
 chrome.runtime.sendMessage({videoTitle, videoId})
 

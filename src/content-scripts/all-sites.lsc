@@ -1,9 +1,10 @@
-import getYoutubeId from 'get-youtube-id'
+import { YouTubeURLParser } from '@iktakahiro/youtube-url-parser'
 
 selector = 'a[href^="https://youtu.be/"], a[href^="https://www.youtube.com/"]'
 
 youtubeLinksVideoIds = [...document.querySelectorAll(selector)].reduce((links, link) ->
-  videoId = getYoutubeId(link.href)
+  parser = new YouTubeURLParser(link.href)
+  videoId = parser.getId()
   // remove duplicates and ignore if empty video id
   if !videoId?.length > 0: return links
   if links.find(id -> id === videoId): return links

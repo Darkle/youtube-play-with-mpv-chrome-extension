@@ -1,4 +1,4 @@
-import youtubeRegex from 'youtube-regex'
+import { YouTubeURLParser } from '@iktakahiro/youtube-url-parser'
 
 /*****
 * Based on https://github.com/winneon/watch-with-mpv/blob/master/extension/background.js
@@ -19,26 +19,28 @@ type Cookie = {
 };
 
 openInMpv(url:string):void ->
-  console.log('openInMpv called')
+  console.log('openInMpv called   ')
   console.log(url)
   if !isValidYoutubeUrl(url): return
 
-  chrome.cookies.getAll({domain: 'www.youtube.com'}, (cookies:Array<Cookie>) ->
-    chrome.runtime.sendNativeMessage(
-      'moe.winneon.watchwithmpv',
-      {
-        url,
-        cookies: [
-          '# Netscape HTTP Cookie File',
-          ...cookies.map(createCookieString)
-        ],
-        // mpvOptions
-      }
-    )
+  chrome.cookies.getAll({domain: 'youtube.com'}, (cookies:Array<Cookie>) ->
+    console.log(cookies)
+    // chrome.runtime.sendNativeMessage(
+    //   'moe.winneon.watchwithmpv',
+    //   {
+    //     url,
+    //     cookies: [
+    //       '# Netscape HTTP Cookie File',
+    //       ...cookies.map(createCookieString)
+    //     ],
+    //     // mpvOptions
+    //   }
+    // )
   )
 
 isValidYoutubeUrl(url:string):boolean ->
-  url.length < 1000 && youtubeRegex().test(url)
+  parser = new YouTubeURLParser(url)
+  url.length < 1000 && parser.isValid()
 
 createCookieString(cookie:Cookie):string ->
   expirationDate = cookie.expirationDate ? Math.round(cookie.expirationDate) : 0

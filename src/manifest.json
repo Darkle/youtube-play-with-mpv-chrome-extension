@@ -10,6 +10,7 @@
     "webNavigation",
     "contextMenus",
     "cookies",
+    "https://youtube.com/*",
     "https://www.youtube.com/*",
     "https://www.googleapis.com/youtube/v3/*"
   ],

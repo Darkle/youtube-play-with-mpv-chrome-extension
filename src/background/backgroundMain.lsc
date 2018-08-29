@@ -34,3 +34,7 @@ chrome.storage.local.get(settingsStorageKeys, setUpDefaultSettings)
 setUpDefaultSettings(settings) ->
   if settings?.length > 0: return
   chrome.storage.local.set(defaultSettings)
+
+chrome.runtime.onMessage.addListener(request ->
+  if request?.openInMpv: openInMpv(request.url)
+)

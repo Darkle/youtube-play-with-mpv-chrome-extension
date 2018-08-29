@@ -1,19 +1,21 @@
 import './styles/youtube.css'
 
+import clockValue from 'smil-clockvalue'
+
 import { stopAutoplayScript } from './stopAutoplayScript.lsc'
-import { openInMpv } from '../../openInMpv.lsc'
 
 observerConfig = { childList: true, subtree: true }
 
 ytAppElement = document.getElementsByTagName('ytd-app')[0]
 
-script = document.createElement('script')
-script.textContent = stopAutoplayScript
-script.setAttribute('id', 'mpvInsertedScript')
+autoplayScript = document.createElement('script')
+autoplayScript.textContent = stopAutoplayScript
+pauseVideoScript = document.createElement('script')
+pauseVideoScript.textContent = `document.querySelector('.html5-video-player').pauseVideo()`
 
 chrome.storage.local.get(['dontLetYTpageVideoAutoLoad'], settings ->
   if !settings.dontLetYTpageVideoAutoLoad: return
-  document.head.appendChild(script)
+  document.head.appendChild(autoplayScript)
 )
 
 openInMpvButton = document.createElement('button')
@@ -26,7 +28,13 @@ mpvImage.setAttribute('src', chrome.runtime.getURL('mpv-logo-128.png'))
 openInMpvButton.appendChild(span)
 openInMpvButton.appendChild(mpvImage)
 
-openInMpvButton.addEventListener('mouseup', () -> need to send this to background whcih will call openInMpv (window.location.href))
+openInMpvButton.addEventListener('mouseup', () ->
+  document.head.appendChild(pauseVideoScript)
+  currentVideoTime = getCurrentVideoTimeInSeconds()
+  let url = window.location.href + `&t=${ currentVideoTime }`
+  if currentVideoTime < 16: now url = window.location.href
+  chrome.runtime.sendMessage({url, openInMpv: true})
+)
 
 observer = new MutationObserver(observerCallback)
 observer.observe(ytAppElement, observerConfig)
@@ -36,3 +44,6 @@ observerCallback(mutationsList):void ->
     if mutation.type == 'childList' && mutation.target.id === 'info-contents':
       document.querySelector('#menu-container').prepend(openInMpvButton)
       observer.disconnect()
+
+getCurrentVideoTimeInSeconds():number ->
+  Math.round(clockValue(document.querySelector('.ytp-time-current').textContent) / 1000)
