@@ -38,7 +38,7 @@ openInMpv(url:string):void ->
 
 isValidYoutubeUrl(url:string):boolean ->
   parser = new YouTubeURLParser(url)
-  url.length < 1000 && parser.isValid()
+  parser.isValid()
 
 createCookieString(cookies:Array<Cookie>):string ->
   cookies.reduce((stringOfCookies, cookie) ->
