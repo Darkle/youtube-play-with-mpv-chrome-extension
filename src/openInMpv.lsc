@@ -21,8 +21,7 @@ type Cookie = {
 };
 
 openInMpv(url:string):void ->
-  console.log('openInMpv called   ')
-  console.log(url)
+  if ISDEV: console.log('openInMpv called with: ', url)
   if !isValidYoutubeUrl(url): return
 
   chrome.cookies.getAll({domain: 'youtube.com'}, (cookies:Array<Cookie>) ->
