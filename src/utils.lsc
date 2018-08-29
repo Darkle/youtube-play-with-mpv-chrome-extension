@@ -11,7 +11,6 @@ settingsStorageKeys = [
 
 pipe(...fns) -> param -> fns.reduce((result, fn) -> fn(result), param)
 
-
 export {
   pipe,
   settingsStorageKeys
