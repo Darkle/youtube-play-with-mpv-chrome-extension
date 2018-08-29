@@ -9,8 +9,7 @@
           }
         },
         "stdlib": false,
-        "noEnforcedSubscriptIndentation": true,
-        "existential": true
+        "noEnforcedSubscriptIndentation": true
       }
     ]
   ]
