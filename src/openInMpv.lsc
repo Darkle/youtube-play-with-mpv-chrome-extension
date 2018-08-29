@@ -1,5 +1,7 @@
 import { YouTubeURLParser } from '@iktakahiro/youtube-url-parser'
 
+import { settingsStorageKeys } from './utils.lsc'
+
 /*****
 * Based on https://github.com/winneon/watch-with-mpv/blob/master/extension/background.js
 */
@@ -24,25 +26,30 @@ openInMpv(url:string):void ->
   if !isValidYoutubeUrl(url): return
 
   chrome.cookies.getAll({domain: 'youtube.com'}, (cookies:Array<Cookie>) ->
-    console.log(cookies)
-    // chrome.runtime.sendNativeMessage(
-    //   'moe.winneon.watchwithmpv',
-    //   {
-    //     url,
-    //     cookies: [
-    //       '# Netscape HTTP Cookie File',
-    //       ...cookies.map(createCookieString)
-    //     ],
-    //     // mpvOptions
-    //   }
-    // )
+    chrome.storage.local.get(settingsStorageKeys, mpvOptions ->
+      nativeMessageData = {
+        url,
+        cookies: createCookieString(cookies),
+        mpvOptions
+      }
+      console.log('nativeMessageData')
+      console.log(nativeMessageData)
+      chrome.runtime.sendNativeMessage('net.ccoding.ytplaywithmpv', nativeMessageData)
+    )
   )
 
 isValidYoutubeUrl(url:string):boolean ->
   parser = new YouTubeURLParser(url)
   url.length < 1000 && parser.isValid()
 
-createCookieString(cookie:Cookie):string ->
+createCookieString(cookies:Array<Cookie>):string ->
+  cookies.reduce((stringOfCookies, cookie) ->
+    `${ stringOfCookies }\n${ createCookie(cookie) }`
+    ,
+    '# Netscape HTTP Cookie File'
+  )
+
+createCookie(cookie:Cookie):string ->
   expirationDate = cookie.expirationDate ? Math.round(cookie.expirationDate) : 0
   dot = cookie.domain.startsWith('.').toString().toUpperCase()
   cookie.domain + ' ' +

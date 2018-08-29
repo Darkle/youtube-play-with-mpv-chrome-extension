@@ -6,6 +6,7 @@
     "storage",
     "activeTab",
     "tabs",
+    "nativeMessaging",
     "declarativeContent",
     "webNavigation",
     "contextMenus",

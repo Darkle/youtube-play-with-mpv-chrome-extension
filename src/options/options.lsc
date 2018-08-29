@@ -8,7 +8,7 @@ import { pipe, storageKeys } from '../utils.lsc'
 type Settings = {
   volume: number,
   alwaysOnTop: boolean,
-  videoQuality: string|number,
+  videoQuality: string,
   defaultMpvWindowSize: string,
   dontLetYTpageVideoAutoLoad: boolean,
   oscStyle: string,
