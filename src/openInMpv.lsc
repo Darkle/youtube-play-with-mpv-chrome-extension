@@ -49,15 +49,18 @@ createCookieString(cookies:Array<Cookie>):string ->
     '# Netscape HTTP Cookie File'
   )
 
+/*****
+* The spaces in the cookie need to be a tab: https://github.com/rg3/youtube-dl/issues/4539
+*/
 createCookie(cookie:Cookie):string ->
   expirationDate = cookie.expirationDate ? Math.round(cookie.expirationDate) : 0
   dot = cookie.domain.startsWith('.').toString().toUpperCase()
-  cookie.domain + ' ' +
-    dot + ' ' +
-    cookie.path + ' ' +
-    cookie.secure.toString().toUpperCase() + ' ' +
-    expirationDate + ' ' +
-    cookie.name + ' ' +
+  cookie.domain + '\t' +
+    dot + '\t' +
+    cookie.path + '\t' +
+    cookie.secure.toString().toUpperCase() + '\t' +
+    expirationDate + '\t' +
+    cookie.name + '\t' +
     cookie.value.replace(/\s/g, '\t')
 
 export {

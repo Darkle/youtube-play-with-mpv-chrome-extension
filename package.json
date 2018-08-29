@@ -39,7 +39,6 @@
   "dependencies": {
     "@iktakahiro/youtube-url-parser": "^1.0.2",
     "axios": "^0.18.0",
-    "nanohtml": "^1.2.4",
-    "smil-clockvalue": "0.0.1"
+    "nanohtml": "^1.2.4"
   }
 }
