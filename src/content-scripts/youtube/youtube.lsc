@@ -28,9 +28,7 @@ openInMpvButton.appendChild(mpvImage)
 
 openInMpvButton.addEventListener('mouseup', () ->
   document.head.appendChild(pauseVideoScript)
-  currentVideoTime = getCurrentVideoTime()
-  let url = window.location.href + `&t=${ currentVideoTime }`
-  if currentVideoTime < 16: now url = window.location.href
+  let url = window.location.href + `&t=${ getCurrentVideoTime() }`
   chrome.runtime.sendMessage({url, openInMpv: true})
 )
 
