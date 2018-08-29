@@ -31,8 +31,7 @@ openInMpv(url:string):void ->
         cookies: createCookieString(cookies),
         mpvOptions
       }
-      console.log('nativeMessageData')
-      console.log(nativeMessageData)
+      if ISDEV: console.log('nativeMessageData: ', nativeMessageData)
       chrome.runtime.sendNativeMessage('net.ccoding.ytplaywithmpv', nativeMessageData)
     )
   )
