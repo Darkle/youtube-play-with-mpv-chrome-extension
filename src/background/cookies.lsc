@@ -1,11 +1,3 @@
-import { YouTubeURLParser } from '@iktakahiro/youtube-url-parser'
-
-import { settingsStorageKeys } from './utils.lsc'
-
-/*****
-* Based on https://github.com/winneon/watch-with-mpv/blob/master/extension/background.js
-*/
-
 type Cookie = {
   name:string,
   value:string,
@@ -19,26 +11,6 @@ type Cookie = {
   expirationDate: ?number,
   storeId: string
 };
-
-openInMpv(url:string):void ->
-  if ISDEV: console.log('openInMpv called with: ', url)
-  if !isValidYoutubeUrl(url): return
-
-  chrome.cookies.getAll({domain: 'youtube.com'}, (cookies:Array<Cookie>) ->
-    chrome.storage.local.get(settingsStorageKeys, mpvOptions ->
-      nativeMessageData = {
-        url,
-        cookies: createCookieString(cookies),
-        mpvOptions
-      }
-      if ISDEV: console.log('nativeMessageData: ', nativeMessageData)
-      chrome.runtime.sendNativeMessage('net.ccoding.ytplaywithmpv', nativeMessageData)
-    )
-  )
-
-isValidYoutubeUrl(url:string):boolean ->
-  parser = new YouTubeURLParser(url)
-  parser.isValid()
 
 createCookieString(cookies:Array<Cookie>):string ->
   cookies.reduce((stringOfCookies, cookie) ->
@@ -61,6 +33,7 @@ createCookie(cookie:Cookie):string ->
     cookie.name + '\t' +
     cookie.value.replace(/\s/g, '\t')
 
-export {
-  openInMpv
+export{
+  createCookieString,
+
 }

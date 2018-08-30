@@ -4,8 +4,6 @@ import './styles/popup.css'
 import html from 'nanohtml'
 import axios from 'axios'
 
-import { openInMpv } from '../openInMpv.lsc'
-
 type Video = {videoTitle: string, videoId:string};
 type AllSitesMessage = {youtubeLinksVideoIds:Array<string>, allSites: boolean};
 videoLinksContainer = document.querySelector('#videoLinks')
@@ -14,7 +12,7 @@ googleApiUrl = 'https://www.googleapis.com/youtube/v3/videos'
 chrome.tabs.query({active: true, currentWindow: true}, tabs ->
   activeTabUrl = tabs[0].url
   if activeTabUrl.startsWith('https://www.youtube.com/') && activeTabUrl.includes('watch?v='):
-    openInMpv(activeTabUrl)
+    chrome.runtime.sendMessage({url: activeTabUrl, openInMpv: true})
     window.close()
   else:
     injectContentScripts(tabs[0].id)
@@ -59,7 +57,10 @@ addLinkToPage({videoTitle, videoId}:Video):void ->
 
 linkClickHandler(event) ->
   event.preventDefault()
-  openInMpv(event.currentTarget.getAttribute('href'))
+  chrome.runtime.sendMessage({
+    url: event.currentTarget.getAttribute('href'),
+    openInMpv: true
+  })
 
 getVideoTitles(videoIds:Array<string>):Promise ->
   axios.get(googleApiUrl, {

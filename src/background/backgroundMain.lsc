@@ -1,7 +1,8 @@
+import { YouTubeURLParser } from '@iktakahiro/youtube-url-parser'
 
 import '../dev/dev-hot-reload.lsc'
-import { openInMpv } from '../openInMpv.lsc'
 import { settingsStorageKeys } from '../utils.lsc'
+import { createCookieString } from './cookies.lsc'
 
 contextMenuOptions = {
   contexts: ['link'],
@@ -17,45 +18,28 @@ defaultSettings = {
   oscStyle: 'bottombar',
   startMPVpaused: false
 }
-
-chrome.contextMenus.create(contextMenuOptions)
-chrome.contextMenus.onClicked.addListener(({linkUrl}) -> openInMpv(linkUrl))
+let port = chrome.runtime.connectNative('net.ccoding.ytplaywithmpv')
 
 // if ISDEV: chrome.storage.local.clear()
-
+chrome.contextMenus.create(contextMenuOptions)
+chrome.contextMenus.onClicked.addListener(({linkUrl}) -> openInMpv(linkUrl))
 chrome.storage.local.get(settingsStorageKeys, setUpDefaultSettings)
+chrome.runtime.onMessage.addListener(request ->
+  if request?.openInMpv: openInMpv(request.url)
+)
 
 setUpDefaultSettings(settings) ->
   if settings?.length > 0: return
   chrome.storage.local.set(defaultSettings)
 
-chrome.runtime.onMessage.addListener(request ->
-  if request?.openInMpv: openInMpv(request.url)
-)
-
 /*****
 * Based on https://github.com/winneon/watch-with-mpv/blob/master/extension/background.js
 */
-
-type Cookie = {
-  name:string,
-  value:string,
-  domain:string,
-  hostOnly:boolean,
-  path:string,
-  secure:boolean,
-  httpOnly:boolean,
-  sameSite:string,
-  session:boolean,
-  expirationDate: ?number,
-  storeId: string
-};
-
 openInMpv(url:string):void ->
   if ISDEV: console.log('openInMpv called with: ', url)
   if !isValidYoutubeUrl(url): return
 
-  chrome.cookies.getAll({domain: 'youtube.com'}, (cookies:Array<Cookie>) ->
+  chrome.cookies.getAll({domain: 'youtube.com'}, (cookies) ->
     chrome.storage.local.get(settingsStorageKeys, mpvOptions ->
       nativeMessageData = {
         url,
@@ -63,7 +47,7 @@ openInMpv(url:string):void ->
         mpvOptions
       }
       if ISDEV: console.log('nativeMessageData: ', nativeMessageData)
-      chrome.runtime.sendNativeMessage('net.ccoding.ytplaywithmpv', nativeMessageData)
+      port.postMessage(nativeMessageData)
     )
   )
 
@@ -71,23 +55,4 @@ isValidYoutubeUrl(url:string):boolean ->
   parser = new YouTubeURLParser(url)
   parser.isValid()
 
-createCookieString(cookies:Array<Cookie>):string ->
-  cookies.reduce((stringOfCookies, cookie) ->
-    `${ stringOfCookies }\n${ createCookie(cookie) }`
-    ,
-    '# Netscape HTTP Cookie File'
-  )
 
-/*****
-* The spaces in the cookie need to be a tab: https://github.com/rg3/youtube-dl/issues/4539
-*/
-createCookie(cookie:Cookie):string ->
-  expirationDate = cookie.expirationDate ? Math.round(cookie.expirationDate) : 0
-  dot = cookie.domain.startsWith('.').toString().toUpperCase()
-  cookie.domain + '\t' +
-    dot + '\t' +
-    cookie.path + '\t' +
-    cookie.secure.toString().toUpperCase() + '\t' +
-    expirationDate + '\t' +
-    cookie.name + '\t' +
-    cookie.value.replace(/\s/g, '\t')
