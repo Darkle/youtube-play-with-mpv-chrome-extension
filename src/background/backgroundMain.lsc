@@ -32,3 +32,62 @@ setUpDefaultSettings(settings) ->
 chrome.runtime.onMessage.addListener(request ->
   if request?.openInMpv: openInMpv(request.url)
 )
+
+/*****
+* Based on https://github.com/winneon/watch-with-mpv/blob/master/extension/background.js
+*/
+
+type Cookie = {
+  name:string,
+  value:string,
+  domain:string,
+  hostOnly:boolean,
+  path:string,
+  secure:boolean,
+  httpOnly:boolean,
+  sameSite:string,
+  session:boolean,
+  expirationDate: ?number,
+  storeId: string
+};
+
+openInMpv(url:string):void ->
+  if ISDEV: console.log('openInMpv called with: ', url)
+  if !isValidYoutubeUrl(url): return
+
+  chrome.cookies.getAll({domain: 'youtube.com'}, (cookies:Array<Cookie>) ->
+    chrome.storage.local.get(settingsStorageKeys, mpvOptions ->
+      nativeMessageData = {
+        url,
+        cookies: createCookieString(cookies),
+        mpvOptions
+      }
+      if ISDEV: console.log('nativeMessageData: ', nativeMessageData)
+      chrome.runtime.sendNativeMessage('net.ccoding.ytplaywithmpv', nativeMessageData)
+    )
+  )
+
+isValidYoutubeUrl(url:string):boolean ->
+  parser = new YouTubeURLParser(url)
+  parser.isValid()
+
+createCookieString(cookies:Array<Cookie>):string ->
+  cookies.reduce((stringOfCookies, cookie) ->
+    `${ stringOfCookies }\n${ createCookie(cookie) }`
+    ,
+    '# Netscape HTTP Cookie File'
+  )
+
+/*****
+* The spaces in the cookie need to be a tab: https://github.com/rg3/youtube-dl/issues/4539
+*/
+createCookie(cookie:Cookie):string ->
+  expirationDate = cookie.expirationDate ? Math.round(cookie.expirationDate) : 0
+  dot = cookie.domain.startsWith('.').toString().toUpperCase()
+  cookie.domain + '\t' +
+    dot + '\t' +
+    cookie.path + '\t' +
+    cookie.secure.toString().toUpperCase() + '\t' +
+    expirationDate + '\t' +
+    cookie.name + '\t' +
+    cookie.value.replace(/\s/g, '\t')
