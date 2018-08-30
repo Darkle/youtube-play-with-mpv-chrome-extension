@@ -19,7 +19,6 @@ const popupHtmlFile = path.join(srcFolder, 'popup', 'popup.html')
 const popupJSFile = path.join(srcFolder, 'popup', 'popup.lsc')
 const backgroundEntryPoint = path.join(srcFolder, 'background', 'backgroundMain.lsc')
 const ytContentScriptEntryPoint = path.join(srcFolder, 'content-scripts', 'youtube', 'youtube.lsc')
-// const ytContentScriptCSS = path.join(srcFolder, 'content-scripts', 'youtube', 'styles', 'youtube.css')
 const ytEmbedsContentScript = path.join(srcFolder, 'content-scripts', 'youtube', 'youtube-embeds.lsc')
 const allSitesScriptEntryPoint = path.join(srcFolder, 'content-scripts', 'all-sites.lsc')
 const ISDEV = process.env.NODE_ENV !== 'production'
@@ -83,7 +82,6 @@ const webpackOptions = {
       { from: jQueryJSFile, to: path.join(buildFolder, 'jquery-3.3.1.min.js') },
       { from: materializeJSFile, to: path.join(buildFolder, 'materialize.js') },
       { from: nouisliderJSFile, to: path.join(buildFolder, 'nouislider.js') },
-      // { from: ytContentScriptCSS, to: path.join(buildFolder, 'youtube.css') },
     ]),
   ]
 }
