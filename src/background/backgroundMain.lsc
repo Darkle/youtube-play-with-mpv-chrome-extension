@@ -18,7 +18,7 @@ defaultSettings = {
   oscStyle: 'bottombar',
   startMPVpaused: false
 }
-let port = chrome.runtime.connectNative('net.ccoding.ytplaywithmpv')
+port = chrome.runtime.connectNative('net.ccoding.ytplaywithmpv')
 
 // if ISDEV: chrome.storage.local.clear()
 chrome.contextMenus.create(contextMenuOptions)
