@@ -10,6 +10,7 @@ There are 3 ways to open a video with this extension:
     * Clicking on the button will open the video in mpv.
   3. Clicking on the button in the chrome extensions toolbar.
     * When you click on the extension button, a popup will display showing all the Youtube links and embeds on the page. Clicking on one of these in the popup will open the video in mpv.
+    * Note: if you click on the button when you are on a Youtube video page, it will open that video without showing the popup.
 
 You can open multiple videos at once.
 
