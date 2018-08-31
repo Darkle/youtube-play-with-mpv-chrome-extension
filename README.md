@@ -45,4 +45,4 @@ You can find the rest of the default mpv keybindings here: https://github.com/mp
 
 ### Support
 
-You can open a support issue here: https://github.com/Darkle/youtube-play-with-mpv-chrome-extension/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc
+You can open a support issue here: https://github.com/Darkle/youtube-play-with-mpv-chrome-extension/issues
