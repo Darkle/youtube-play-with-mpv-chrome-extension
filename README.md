@@ -2,6 +2,10 @@
 
 This is an extension that lets you play youtube videos with [mpv](https://mpv.io/ "mpv homepage").
 
+### Important
+
+If you install the [Native Client](#native-client) after you install the Chrome extension, make sure to disable, then re-enable the Chrome extension.
+
 There are 3 ways to open a video with this extension:
 
   1. Right-click on a youtube link:
