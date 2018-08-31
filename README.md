@@ -42,3 +42,7 @@ I have changed the mpv keybindings slightly:
   * The ctrl+right now skips ahead by one minute and ctrl+left skips back one minute (left and right still skip the normal amount: 5 seconds)
 
 You can find the rest of the default mpv keybindings here: https://github.com/mpv-player/mpv/blob/master/etc/input.conf
+
+### Support
+
+You can open a support issue here: https://github.com/Darkle/youtube-play-with-mpv-chrome-extension/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc
