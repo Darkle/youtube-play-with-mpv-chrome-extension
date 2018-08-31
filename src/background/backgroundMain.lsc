@@ -29,7 +29,7 @@ chrome.runtime.onMessage.addListener(request ->
 )
 
 setUpDefaultSettings(settings) ->
-  if settings?.length > 0: return
+  if Object.keys(settings).length > 0: return
   chrome.storage.local.set(defaultSettings)
 
 /*****
