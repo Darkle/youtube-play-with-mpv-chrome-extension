@@ -6,22 +6,35 @@
 stopAutoplayScript = `
   var videoElement = document.querySelector('video')
   var playerElement = document.querySelector('.html5-video-player')
+  var hasClickedOnVideoToPlayIt = false
+  document.querySelector('#player-container .html5-video-container').addEventListener('click', (e) => {
+    hasClickedOnVideoToPlayIt = true
+  }, {once: true})
+  document.querySelector('#player-container .ytp-play-button').addEventListener('click', (e) => {
+    hasClickedOnVideoToPlayIt = true
+  })
   function stopAutoplay(){
     videoElement.addEventListener('play',
       () => {
-        playerElement.pauseVideo()
+        if(!hasClickedOnVideoToPlayIt){
+          playerElement.pauseVideo()
+        }
       },
       {once: true}
     )
     videoElement.addEventListener('playing',
       () => {
-        playerElement.pauseVideo()
+        if(!hasClickedOnVideoToPlayIt){
+          playerElement.pauseVideo()
+        }
       },
       {once: true}
     )
     videoElement.addEventListener('timeupdate',
       () => {
-        playerElement.pauseVideo()
+        if(!hasClickedOnVideoToPlayIt){
+          playerElement.pauseVideo()
+        }
       },
       {once: true}
     )
