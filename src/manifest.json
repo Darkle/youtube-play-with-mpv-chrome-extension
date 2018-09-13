@@ -1,6 +1,6 @@
 {
   "name": "Youtube Play With MPV",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Allows you to play youtube videos in mpv",
   "permissions": [
     "storage",

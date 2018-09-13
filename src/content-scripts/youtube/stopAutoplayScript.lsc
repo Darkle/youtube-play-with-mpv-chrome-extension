@@ -9,12 +9,16 @@ stopAutoplayScript = `
     var videoElement = document.querySelector('video')
     var playerElement = document.querySelector('.html5-video-player')
     var playerContainer = document.querySelector('#player-container .html5-video-container')
+    var thumbnailOverlay = document.querySelector('#player-container .ytp-cued-thumbnail-overlay')
     var playButton = document.querySelector('#player-container .ytp-play-button')
     var hasClickedOnVideoToPlayIt = false
     if(!playerContainer || !playButton){
       return
     }
     playerContainer.addEventListener('click', (e) => {
+      hasClickedOnVideoToPlayIt = true
+    }, {once: true})
+    thumbnailOverlay.addEventListener('click', (e) => {
       hasClickedOnVideoToPlayIt = true
     }, {once: true})
     playButton.addEventListener('click', (e) => {
